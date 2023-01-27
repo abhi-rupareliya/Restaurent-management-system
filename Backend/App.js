@@ -9,6 +9,6 @@ app.use(express.json())
 app.use(cors())
 require('./Routes/UserRoutes')(app)
 require('./Routes/Menu')(app)
-app.listen(4000,()=>{
+app.listen(PORT,()=>{
     console.log("Server is Listening")
 })
