@@ -24,7 +24,8 @@ function UserRoutes(app) {
             const created = await createUser.save()
             const data = {
                 user: {
-                    id: createUser.id
+                    id: createUser.id,
+                    role : createUser.role
                 }  
             }
             const authtoken = jwt.sign(data, jwt_sec)
@@ -46,7 +47,8 @@ function UserRoutes(app) {
             {
                 const data = {
                     user: {
-                        id: user.id
+                        id: user.id,
+                        role : createUser.role
                     }
                 }
                 const authtoken = jwt.sign(data,jwt_sec)
