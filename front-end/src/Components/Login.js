@@ -11,13 +11,13 @@ const Login = () => {
     const [Password, setPassword] = useState("")
     const navigate = useNavigate()
     return (
-        <section className=''>
+        <section className="Login bg-[url('/public/images/bglogin.jpg')] bg-cover">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 ">
-                <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 ">
-                    <img className="w-14 mr-5 " src={logo} alt="images" />
-                    RestoBite
-                </a>
                 <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+                    <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 justify-center ">
+                        <img className="w-14 mr-5 " src={logo} alt="images" />
+                        RestoBite
+                    </a>
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
                             Sign in to your account
@@ -42,9 +42,9 @@ const Login = () => {
                                 </div>
                                 <a href="#" className="text-sm font-medium text-primary-600 hover:underline ">Forgot password?</a>
                             </div>
-                            <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
+                            <button type="submit" className="w-full text-white bg-orange-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
                             <p className="text-sm font-light text-gray-500">
-                                Don’t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline">Sign up</a>
+                                Don’t have an account yet? <Link to='/signup' className="font-medium text-primary-600 hover:underline">Sign up</Link>
                             </p>
                         </form>
                     </div>
