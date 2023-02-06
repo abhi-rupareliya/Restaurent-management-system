@@ -5,6 +5,7 @@ import OuterLayout from './Components/OuterLayout';
 import Login from './Components/Login';
 import Home from './Components/Home';
 import Signup from './Components/Signup';
+import './index.css'
 function App() {
   return (
     <BrowserRouter>
