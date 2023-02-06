@@ -48,7 +48,7 @@ function UserRoutes(app) {
                 const data = {
                     user: {
                         id: user.id,
-                        role : createUser.role
+                        role : user.role
                     }
                 }
                 const authtoken = jwt.sign(data,jwt_sec)
