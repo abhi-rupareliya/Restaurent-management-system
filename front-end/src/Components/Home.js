@@ -1,25 +1,27 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
+import jwt_decode from "jwt-decode"
 const Home = () => {
     const navigate = useNavigate()
     useEffect(() => {
         if (localStorage.getItem('myToken')) {
-
+            const decoded = jwt_decode(localStorage.getItem('myToken'))
+            console.warn(decoded.user.role);
+            console.warn(decoded);
+            console.warn(decoded.user.id);
+            if (decoded.user.role === 'manager') {
+                navigate("/manager/"+decoded.user.id)
+            }
+            else {
+                navigate("/cashier/"+decoded.user.id)
+            }
         } else {
             navigate('/login')
             console.warn('Login first')
         }
-    }, )
+    },)
 
-    return (
-        <div>
-            <h1>Logged in</h1>
-            <button onClick={(e) => { 
-                localStorage.clear()
-                navigate('/login') }}>Log Out</button>
-        </div>
-    );
+
 }
 
 export default Home;

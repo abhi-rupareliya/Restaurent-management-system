@@ -25,45 +25,42 @@ function UserRoutes(app) {
             const data = {
                 user: {
                     id: createUser.id,
-                    role : createUser.role
-                }  
+                    role: createUser.role
+                }
             }
             const authtoken = jwt.sign(data, jwt_sec)
-            res.status(200).send({success : true ,authtoken })
-        } catch(err) {
-            res.status(400).send({success:false,err})
+            res.status(200).send({ success: true, authtoken })
+        } catch (err) {
+            res.status(400).send({ success: false, err })
         }
     })
 
-    app.post('/login',async(req,res)=>{
+    app.post('/login', async (req, res) => {
         try {
             const email = req.body.email
-        const password = req.body.password
-        const user = await User.findOne({email : email})
-        if(user)
-        {
-            const isMatch = await bcryptjs.compare(password,user.password)
-            if(isMatch)
-            {
-                const data = {
-                    user: {
-                        id: user.id,
-                        role : user.role
+            const password = req.body.password
+            const user = await User.findOne({ email: email })
+            if (user) {
+                const isMatch = await bcryptjs.compare(password, user.password)
+                if (isMatch) {
+                    const data = {
+                        user: {
+                            id: user.id,
+                            role: user.role
+                        }
                     }
+                    const authtoken = jwt.sign(data, jwt_sec)
+                    res.status(200).send({ success: true, authtoken })
                 }
-                const authtoken = jwt.sign(data,jwt_sec)
-                res.status(200).send({success : true ,authtoken})
+                else {
+                    res.status(400).send({ success: false, message: "Invalid Credential" })
+                }
             }
-            else{
-                res.status(400).send({success : false,message:"Invalid Credential"})
+            else {
+                res.status(400).send({ success: false, message: "Invalid Credential" })
             }
-        }
-        else
-        {
-            res.status(400).send({success : false,message:"Invalid Credential"})
-        }
         } catch (error) {
-            res.status(400).send({success : false,error})
+            res.status(400).send({ success: false, error })
         }
     })
 }

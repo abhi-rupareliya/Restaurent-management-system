@@ -8,7 +8,6 @@ app.use(express.urlencoded({extended : true}))
 app.use(express.json())
 app.use(cors())
 require('./Routes/UserRoutes')(app)
-require('./Routes/Menu')(app)
 require('./Routes/MenuRoutes')(app)
 app.listen(PORT,()=>{
     console.log("Server is Listening")
