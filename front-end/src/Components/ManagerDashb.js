@@ -1,16 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Nevbar from './Nevbar';
 
 const ManagerDashb = () => {
     const navigate = useNavigate()
     return (
         <div>
-            <p>Welcome bhai</p>
+            <Nevbar/>
             <div>
-                <button onClick={(e) => {
-                    localStorage.clear()
-                    navigate('/login')
-                }}>Log Out</button>
+                
             </div>
         </div>
     );

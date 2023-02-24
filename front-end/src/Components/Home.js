@@ -6,9 +6,6 @@ const Home = () => {
     useEffect(() => {
         if (localStorage.getItem('myToken')) {
             const decoded = jwt_decode(localStorage.getItem('myToken'))
-            console.warn(decoded.user.role);
-            console.warn(decoded);
-            console.warn(decoded.user.id);
             if (decoded.user.role === 'manager') {
                 navigate("/manager/"+decoded.user.id)
             }
