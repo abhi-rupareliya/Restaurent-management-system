@@ -1,13 +1,13 @@
-import './App.css';
+import './App.css'
 import 'react-router-dom'
-import { BrowserRouter, Route , Routes } from 'react-router-dom';
-import OuterLayout from './Components/OuterLayout';
-import Login from './Components/Login';
-import Home from './Components/Home';
-import Signup from './Components/Signup';
+import { BrowserRouter, Route , Routes } from 'react-router-dom'
+import OuterLayout from './Components/OuterLayout'
+import Login from './Components/Login'
+import Home from './Components/Home'
+import Signup from './Components/Signup'
 import './index.css'
-import ManagerDashb from './Components/ManagerDashb';
-import CashierDashb from './Components/CashierDashb';
+import ManagerDashb from './Components/ManagerDashb'
+import CashierDashb from './Components/CashierDashb'
 function App() {
   return (
     <BrowserRouter>

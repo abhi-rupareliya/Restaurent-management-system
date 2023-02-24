@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import FSignup from '../Function/F_Signup';
-import logo from '../images/logo.png';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import FSignup from '../Function/F_Signup'
+import logo from '../images/logo.png'
 
 const Signup = () => {
     const [userName, setUserName] = useState("")
@@ -63,4 +63,4 @@ const Signup = () => {
     );
 }
 
-export default Signup;
+export default Signup
