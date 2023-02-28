@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Nevbar from './Nevbar';
+import Navbar from './Navbar';
 
 const ManagerDashb = () => {
     const navigate = useNavigate()
     return (
         <div>
-            <Nevbar/>
+            <Navbar/>
             <div>
                 
             </div>
