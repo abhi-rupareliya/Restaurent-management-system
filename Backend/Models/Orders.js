@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
-    item_id:{
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'Menu',
-        required : true
+    item_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Menu',
+        required: true
     },
-    quantity:{
-        type : Number,
-        required :true
+    quantity: {
+        type: Number,
+        required: true
     }
 });
 

@@ -1,4 +1,3 @@
-const { listIndexes, findById } = require('../models/Menu_schema')
 const Menu = require('../models/Menu_schema')
 const Menu_middleware = require('../Middlewares/Menu_middleware')
 module.exports = function MenuRoutes(app) {
