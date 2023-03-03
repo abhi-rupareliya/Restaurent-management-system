@@ -41,8 +41,6 @@ const Menu = () => {
             FGetMenu().then((res) => setMenu(res))
         }
     }
-
-    
     return (
         <>
             <Navbar title="Menu" />
@@ -116,10 +114,9 @@ const Menu = () => {
                                                             setAddEdit("Edit Item")
                                                         }}>Edit</button>
                                                         <button className="font-medium mx-4 text-[#f26926] l hover:underline" onClick={async (e) => {
+                                                            e.preventDefault()
                                                             setOpenDelete(true)
-                                                            // e.preventDefault()
-                                                            // const res = await FDeleteMenu(item._id)
-                                                            // FGetMenu().then((res) => setMenu(res))
+                                                            setIid(item._id)
                                                         }} >Delete</button>
                                                     </td>
                                                 </tr>
@@ -187,6 +184,10 @@ const Menu = () => {
                                                 onClick={async (e) => {
                                                     e.preventDefault()
                                                     // User confirmation
+                                                    const res = await FDeleteMenu(iid) // from iid state.
+                                                    FGetMenu().then((res) => setMenu(res))
+                                                    setIid('')
+                                                    setOpenDelete(false)
                                                 }}
                                             >
                                                 Yes
