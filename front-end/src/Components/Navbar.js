@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 
-function Nevbar() {
+function Navbar(props) {
   const navigate = useNavigate()
   return (
     <nav className="sticky w-full z-20 top-0 left-0 m-0 bg-gradient-to-r from-black via-[hsl(33,56%,17%)] to-black shadow-lg">
@@ -14,7 +14,7 @@ function Nevbar() {
           <span className="self-center text-2xl whitespace-nowrap font-thin text-[#f26926] ">RestoBite</span>
         </Link>
         <div className="flex md:order-2 text-white underline decoration-[#f26926] text-3xl">
-          Manager's Dashboard
+          {props.title}
         </div>
         <div className="flex md:order-2">
           <div className="w-full md:block md:w-auto" id="navbar-default">
@@ -33,4 +33,4 @@ function Nevbar() {
 
   )
 }
-export default Nevbar
+export default Navbar
