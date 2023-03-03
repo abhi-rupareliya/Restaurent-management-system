@@ -101,7 +101,7 @@ const Signup = () => {
                                 } else {
                                     setErrors(errors);
                                 }
-                            }} type="submit" className="w-full text-white bg-orange-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign up</button>
+                            }} type="submit" className="w-full hover:bg-orange-500 text-white bg-orange-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign up</button>
                             <p className="text-sm font-light text-gray-500">
                                 You already have an account? <Link to='/login' className="font-medium text-primary-600 hover:underline">Login</Link>
                             </p>
