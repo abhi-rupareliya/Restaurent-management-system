@@ -1,3 +1,4 @@
+const path = require('path');
 const Table = require('../Models/Table');
 function TableRoutes(app) {
     app.post('/add_table', async (req, res) => {
@@ -39,6 +40,22 @@ function TableRoutes(app) {
             res.status(500).send('Server error');
         }
     });
+
+    app.get('/get_det/:tab_id',async (req,res)=>{
+        try {
+            const {tab_id} = req.params
+
+            const tab = await Table.findOne({tab_id})
+            .populate({path:"orders.item",select:["item_name","item_price"]})
+            if(!tab){
+                res.status(400).send({error:"table not found.",success:false})
+            }
+            res.status(200).send(tab)
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Server error');
+        }
+    })
 }
 
 module.exports = TableRoutes;

@@ -11,10 +11,10 @@ const menuSchema = new Schema({
         type: Number,
         required: true,
     },
-    // item_category:{
-    // 	type: String,
-    //   required: true
-    // }
+    item_category:{
+    	type: String,
+      required: true
+    }
 });
 
 module.exports = mongoose.model('Menu', menuSchema);

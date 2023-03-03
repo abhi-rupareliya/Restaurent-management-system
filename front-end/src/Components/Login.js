@@ -15,8 +15,6 @@ const Login = () => {
     const Submitted = async (e) => {
         e.preventDefault()
 
-        e.preventDefault()
-
         // Validate form fields
         const errors = {}
         if (!Email) {
