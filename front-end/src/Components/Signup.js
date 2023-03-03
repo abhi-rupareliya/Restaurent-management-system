@@ -27,7 +27,7 @@ const Signup = () => {
                                 <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Username</label>
                                 <input type="username" name="username" id="username" className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ${errors.userName ? "border-red-500" : ""}`}
                                     onChange={(e) => setUserName(e.target.value)}
-                                    value={userName} placeholder="Enter Username :" required=""
+                                    value={userName} placeholder="Enter Username" required=""
                                 />
                                 {errors.userName && (
                                     <p className="text-red-500 text-sm mt-1">{errors.userName}</p>
