@@ -1,17 +1,17 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import Navbar from './Navbar'
+import Sidebar from './Sidebar'
 const CashierDashb = () => {
-    const navigate = useNavigate()
     return (
-        <div>
-            <p>Cashier</p>
-            <div>
-                <button onClick={(e) => {
-                    localStorage.clear()
-                    navigate('/login')
-                }}>Log Out</button>
+        <>
+            <Navbar title="Waiter's Dashboard" />
+            <Sidebar />
+            <div className="bg-[url('/public/images/dashbackground.jpg')]">
+                <div className="bg-black/75 col-span-5 p-4 sm:ml-64 backdrop-blur-sm  min-h-screen">
+                </div>
             </div>
-        </div>
+            
+        </>
     );
 }
 

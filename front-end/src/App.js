@@ -9,6 +9,7 @@ import './index.css'
 import ManagerDashb from './Components/ManagerDashb'
 import CashierDashb from './Components/CashierDashb'
 import Menu from './Components/Menu'
+import Tables from './Components/Tables'
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ function App() {
           <Route exact path='/manager/:id' element={<ManagerDashb/>}/>
           <Route exact path='/cashier/:id' element={<CashierDashb/>}/>
           <Route exact path='/manager/menu' element={<Menu/>}/>
+          <Route exact path='/tables' element={<Tables/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -50,6 +50,12 @@ function Sidebar() {
                                     <span className="flex-1 ml-3 whitespace-nowrap">Sign Up</span>
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="/tables" className="flex items-center p-2 text-base font-normal rounded-lg l text-white l hover:text-white hover:bg-gradient-to-r from-[#f26926] to-orange-400">
+                                    <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 transition duration-75 l text-gray-400 l group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clipRule="evenodd"></path></svg>
+                                    <span className="flex-1 ml-3 whitespace-nowrap">Temp</span>
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </aside>
