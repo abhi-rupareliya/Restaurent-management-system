@@ -6,7 +6,7 @@ import FGetMenu from '../Function/F_GetMenu'
 import FAddMenu from '../Function/F_AddMenu';
 import { FDeleteMenu, FEditMenu } from '../Function/F_EditMenu'
 import { useEffect } from 'react';
-import SideBar from './Sidebar';
+import SideBar from './SidebarMGR';
 // import SideBar from "./SideBar";
 const Menu = () => {
     const [open, setOpen] = useState(false);

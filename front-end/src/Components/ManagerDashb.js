@@ -3,7 +3,8 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import Sidebar from "./Sidebar"; import Menu from "./Menu";
+import Sidebar from "./SidebarMGR"; 
+import Menu from "./Menu";
 // import SideBar from "./SideBar";
 
 const ManagerDashb = () => {

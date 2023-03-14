@@ -10,6 +10,7 @@ import ManagerDashb from './Components/ManagerDashb'
 import CashierDashb from './Components/CashierDashb'
 import Menu from './Components/Menu'
 import Tables from './Components/Tables'
+import Orders from './Components/Orders'
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ function App() {
           <Route exact path='/manager/:id' element={<ManagerDashb/>}/>
           <Route exact path='/cashier/:id' element={<CashierDashb/>}/>
           <Route exact path='/manager/menu' element={<Menu/>}/>
+          <Route exact path='/cashier/takeorders' element={<Orders/>}/>
           <Route exact path='/tables' element={<Tables/>}/>
         </Route>
       </Routes>
