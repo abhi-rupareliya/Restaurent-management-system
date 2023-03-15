@@ -12,6 +12,7 @@ const Orders = () => {
     const [open, setOpen] = useState(false)
     const [addEdit, setAddEdit] = useState('')
     const cancelButtonRef = useRef(null)
+    const [ProductCount, setProductCount] = useState(0)
     return (
         <>
             <Navbar title="Manage Orders" />
@@ -126,14 +127,99 @@ const Orders = () => {
                                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                                         >
-                                            <Dialog.Panel className="relative rounded-lg overflow-hidden bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full m-40">
+                                            <Dialog.Panel className="relative rounded-lg overflow-hidden bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full m-40 p-0">
                                                 <div className="bg-white flex justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                                     <div className="sm:flex sm:items-start">
                                                         <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                                             <Dialog.Title
                                                                 as="h3"
-                                                                className="text-lg font-bold text-center leading-6 text-gray-900"
-                                                            ></Dialog.Title>
+                                                                className="font-bold text-start text-2xl leading-6 text-gray-900"
+                                                            >
+                                                                Take order for Table-1
+                                                            </Dialog.Title>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="bg-white flex justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4 p-0">
+                                                    <div className="sm:flex sm:items-start w-full">
+                                                        <div className="mt-3 text-center sm:mt-0 sm:m-4 sm:text-left w-full">
+                                                            <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-0">
+                                                                <table className="w-full text-sm text-left text-gray-400" >
+                                                                    <thead className="text-xs text-[#f26926] uppercase bg-[#2d2d2d] l">
+                                                                        <tr>
+                                                                            <th scope="col" className="px-6 py-3">
+                                                                                Sr.
+                                                                            </th>
+                                                                            <th scope="col" className="px-6 py-3">
+                                                                                Item name
+                                                                            </th>
+                                                                            <th scope="col" className="px-6 py-3">
+                                                                                Category
+                                                                            </th>
+                                                                            <th scope="col" className="px-6 py-3">
+                                                                                Quantity
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {/* { */}
+                                                                        {/* Menu.map((item, key) => { */}
+                                                                        {/* return ( */}
+                                                                        <tr className="border-b l bg-[#10171e] l border-gray-700">
+                                                                            <td className="px-6 py-4">
+                                                                                {/* {key + 1} */}
+                                                                                num
+                                                                            </td>
+                                                                            <td className="px-6 py-4">
+                                                                                {/* {item.item_price} */}
+                                                                                Price
+                                                                            </td>
+                                                                            <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap l text-white">
+                                                                                {/* {item.item_name} */}
+                                                                                name
+                                                                            </th>
+                                                                            <td className="px-6 py-4">
+                                                                                <div className="flex flex-row h-10 rounded-lg relative bg-transparent mt-1">
+                                                                                    <button
+                                                                                        data-action="decrement"
+                                                                                        className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-l cursor-pointer outline-none"
+                                                                                        onClick={() => setProductCount(ProductCount - 1)}
+                                                                                    >
+                                                                                        <span className="m-auto text-2xl font-thin">-</span>
+                                                                                    </button>
+                                                                                    <input
+                                                                                        type="number"
+                                                                                        className="w-10 pl-[0.4rem] outline-none focus:outline-none text-center bg-gray-300 font-semibold text-md hover:text-black focus:text-black md:text-base cursor-default text-gray-700"
+                                                                                        name="custom-input-number"
+                                                                                        value={ProductCount}
+                                                                                        readOnly
+                                                                                    />
+                                                                                    <button
+                                                                                        data-action="increment"
+                                                                                        className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-r cursor-pointer"
+                                                                                        onClick={() => setProductCount(ProductCount + 1)}
+                                                                                    >
+                                                                                        <span className="m-auto text-2xl font-thin">+</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                {/* <div className="quantity-button">
+                                                                                    <button type="button" onClick={() => setProductCount(ProductCount - 1)} className="quantity-button__btn">
+                                                                                        -
+                                                                                    </button>
+                                                                                    <span>{ProductCount}</span>
+                                                                                    <button type="button" onClick={() => setProductCount(ProductCount + 1)} className="quantity-button__btn">
+                                                                                        +
+                                                                                    </button>
+                                                                                </div> */}
+                                                                            </td>
+                                                                        </tr>
+                                                                        {/* ) */}
+                                                                        {/* }) */}
+                                                                        {/* } */}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
 
                                                         </div>
                                                     </div>
