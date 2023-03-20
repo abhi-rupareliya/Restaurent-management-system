@@ -1,6 +1,4 @@
-import React from 'react';
-
-const FGetTables = async() => {
+const FGetTables = async () => {
     const apiUrl = "http://localhost:4000/getTabs"
     const res = await fetch(apiUrl, {
         method: "GET"

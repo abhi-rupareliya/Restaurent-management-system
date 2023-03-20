@@ -34,21 +34,46 @@ function TableRoutes(app) {
                 { new: true }
             );
 
-            res.status(200).send({success:true,table})
+            res.status(200).send({ success: true, table })
         } catch (err) {
             console.error(err.message);
             res.status(500).send('Server error');
         }
     });
 
-    app.get('/get_det/:tab_id',async (req,res)=>{
+    app.put('/tablesUpdate/:id', async (req, res) => {
         try {
-            const {tab_id} = req.params
+            const updatedItems = req.body.orders
+            const tab_id = req.params.id
+            const table = await Table.findOneAndUpdate(
+                { tab_id },
+                { $set: { orders: updatedItems} }
+            );
 
-            const tab = await Table.findOne({tab_id})
-            .populate({path:"orders.item",select:["item_name","item_price"]})
-            if(!tab){
-                res.status(400).send({error:"table not found.",success:false})
+            res.status(200).send({ success: true, table })
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server error');
+        }
+    })
+
+    app.get('/getTabs', async (req, res) => {
+        try {
+            const tables = await Table.find({})
+            res.status(200).send(tables)
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Server error');
+        }
+    })
+    app.get('/get_det/:tab_id', async (req, res) => {
+        try {
+            const { tab_id } = req.params
+
+            const tab = await Table.findOne({ tab_id })
+                .populate({ path: "orders.item", select: ["item_name", "item_price"] })
+            if (!tab) {
+                res.status(400).send({ error: "table not found.", success: false })
             }
             res.status(200).send(tab)
         } catch (error) {
