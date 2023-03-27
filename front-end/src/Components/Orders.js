@@ -32,13 +32,13 @@ const Orders = () => {
                             Tables.map((table, key) => {
                                 return (
                                     <>
-                                        <div class="mx-auto max-w-7xl" onClick={() => {
+                                        <div className="mx-auto max-w-7xl" onClick={() => {
                                             navigate('/editorders/' + table.tab_id)
                                         }}>
-                                            <div class="group relative">
-                                                <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-orange-600 to-pink-600 opacity-25 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
-                                                <div class="flex  rounded-xl w-80 h-48 items-top relative justify-center items-center space-x-6 bg-[rgb(255,233,201)] px-7 py-6 leading-none ring-1 ring-gray-900/5">
-                                                    <h1 class="text-4xl font-bold text-[#393b3a] z-10 space-y-2">
+                                            <div className="group relative">
+                                                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-orange-600 to-pink-600 opacity-25 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
+                                                <div className="flex  rounded-xl w-80 h-48 items-top relative justify-center items-center space-x-6 bg-[rgb(255,233,201)] px-7 py-6 leading-none ring-1 ring-gray-900/5">
+                                                    <h1 className="text-4xl font-bold text-[#393b3a] z-10 space-y-2">
                                                         {table.tab_id}
                                                     </h1>
                                                 </div>
@@ -48,13 +48,13 @@ const Orders = () => {
                                 )
                             })
                         }
-                        <div class="mx-auto max-w-7xl" onClick={() => {
+                        <div className="mx-auto max-w-7xl" onClick={() => {
                             setOpen(true)
                         }}>
-                            <div class="group relative">
-                                <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-orange-600 to-pink-600 opacity-25 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
-                                <div class="flex  rounded-xl w-80 h-48 items-top relative justify-center items-center space-x-6 bg-[rgb(255,233,201)] px-7 py-6 leading-none ring-1 ring-gray-900/5">
-                                    <div class="px-10 py-3 flex justify-content-center items-center text-4xl font-bold text-[#393b3a] z-10 space-y-2 border-4 border-dashed border-orange-500 rounded-lg">
+                            <div className="group relative">
+                                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-orange-600 to-pink-600 opacity-25 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
+                                <div className="flex  rounded-xl w-80 h-48 items-top relative justify-center items-center space-x-6 bg-[rgb(255,233,201)] px-7 py-6 leading-none ring-1 ring-gray-900/5">
+                                    <div className="px-10 py-3 flex justify-content-center items-center text-4xl font-bold text-[#393b3a] z-10 space-y-2 border-4 border-dashed border-orange-500 rounded-lg">
                                         +
                                     </div>
                                 </div>
@@ -68,3 +68,6 @@ const Orders = () => {
 }
 
 export default Orders;
+
+
+
