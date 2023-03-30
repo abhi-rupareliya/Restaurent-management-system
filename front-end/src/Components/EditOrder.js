@@ -42,6 +42,10 @@ const EditOrder = () => {
     };
 
     const handleAddItem = async () => {
+        if (selectedItem === "Select an Item"){
+            alert("Please select an item.")
+            return;
+        }
         try {
             const itemExists = items.some((item) => item.item._id === selectedItem._id);
 
