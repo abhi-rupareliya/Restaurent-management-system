@@ -17,7 +17,7 @@ const Login = () => {
 
         // Validate form fields
         const errors = {}
-        if (!Email) {
+        if (!Email) { 
             errors.email = 'Email is required'
         } else if (!/\S+@\S+\.\S+/.test(Email)) {
             errors.email = 'Email is invalid'

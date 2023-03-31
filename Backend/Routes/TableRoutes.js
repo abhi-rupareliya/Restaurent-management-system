@@ -7,7 +7,7 @@ function TableRoutes(app) {
             const existingTable = await Table.findOne({ tab_id });
             if (existingTable) {
                 return res.status(400).json({ error: 'Table already exists' });
-            }
+               }
 
             const newTable = new Table({
                 tab_id,
