@@ -27,4 +27,21 @@ export const FAddOrder = async(id,selectedItem,qty) => {
     const data = await response.json();
 }
 
+
+export const FDeleteOrder = async(tid,oid) => {
+    const apiUrl = `http://localhost:4000/removeitem`;
+    const response = await fetch(apiUrl, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+
+            tableId:tid,
+            orderId : oid
+        }),
+    });
+    const data = await response.json();
+}
+
 export default FUpdateOrders;

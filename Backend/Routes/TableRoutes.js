@@ -7,7 +7,7 @@ function TableRoutes(app) {
             const existingTable = await Table.findOne({ tab_id });
             if (existingTable) {
                 return res.status(400).json({ error: 'Table already exists' });
-               }
+            }
 
             const newTable = new Table({
                 tab_id,
@@ -80,6 +80,27 @@ function TableRoutes(app) {
             res.status(500).send('Server error');
         }
     })
+    app.delete('/removeitem', async (req, res) => {
+        try {
+            const { tableId, orderId } = req.body;
+
+            const table = await Table.findOneAndUpdate(
+                { tab_id: tableId },
+                { $pull: { orders: { _id: orderId } } },
+                { new: true }
+            );
+
+            if (!table) {
+                return res.status(404).json({ msg: 'Table not found' });
+            }
+
+            res.json(table);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+    });
+
 }
 
 module.exports = TableRoutes;

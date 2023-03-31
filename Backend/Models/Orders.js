@@ -16,9 +16,4 @@ const orderSchema = new Schema({
     }
 });
 
-<<<<<<< HEAD
-
 module.exports = mongoose.model('Order', orderSchema);
-=======
-module.exports = mongoose.model('Order',orderSchema);
->>>>>>> 5bc7015fdd002c7838c6110c02bfbce7c8ea3e75

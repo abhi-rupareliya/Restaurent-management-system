@@ -6,7 +6,7 @@ import SideBar from './SidebarCSR';
 import { useParams } from 'react-router-dom';
 import FGetMenu from '../Function/F_GetMenu';
 import FGetOrders from '../Function/F_GetOrders';
-import FUpdateOrders, { FAddOrder } from '../Function/F_UpdateOrders';
+import FUpdateOrders, { FAddOrder, FDeleteOrder } from '../Function/F_UpdateOrders';
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 function classNames(...classes) {
@@ -18,6 +18,7 @@ const EditOrder = () => {
     const [openDelete, setOpenDelete] = useState(false)
     const cancelButtonRef = useRef(null)
     const [items, setItems] = useState([]);
+    const [deleteId,setDelId] = useState('')
     const [selectedItem, setSelectedItem] = useState('Select an Item');
     const [options, setOptions] = useState([]);
     const [qty, setQty] = useState(1)
@@ -42,7 +43,7 @@ const EditOrder = () => {
     };
 
     const handleAddItem = async () => {
-        if (selectedItem === "Select an Item"){
+        if (selectedItem === "Select an Item") {
             alert("Please select an item.")
             return;
         }
@@ -65,6 +66,15 @@ const EditOrder = () => {
                 await FAddOrder(id, selectedItem._id, qty)
                 fetchData();
             }
+        } catch (error) {
+            console.warn(error);
+        }
+    };
+
+    const handleDeleteItem = async (oid) => {
+        try {
+            const res = await FDeleteOrder(id,oid)
+            fetchData()
         } catch (error) {
             console.warn(error);
         }
@@ -104,24 +114,24 @@ const EditOrder = () => {
                                                 >
                                                     <Menu.Items className="absolute z-10 mt-2 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                         <div className="py-1" >
-                                                        {options.map((option) => (
-                                                            <Menu.Item>
-                                                                {({ active }) => (
-                                                                    <a 
-                                                                        href="#"
-                                                                        onClick={() => {
-                                                                            setSelectedItem(option);
-                                                                        }}
-                                                                        className={classNames(
-                                                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                            'block px-4 py-2 text-sm'
-                                                                        )} 
-                                                                    >
-                                                                        {option.item_name}
-                                                                    </a>
-                                                                )}
-                                                            </Menu.Item>
-                                                              ))}
+                                                            {options.map((option) => (
+                                                                <Menu.Item>
+                                                                    {({ active }) => (
+                                                                        <a
+                                                                            href="#"
+                                                                            onClick={() => {
+                                                                                setSelectedItem(option);
+                                                                            }}
+                                                                            className={classNames(
+                                                                                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                                'block px-4 py-2 text-sm'
+                                                                            )}
+                                                                        >
+                                                                            {option.item_name}
+                                                                        </a>
+                                                                    )}
+                                                                </Menu.Item>
+                                                            ))}
                                                         </div>
                                                     </Menu.Items>
                                                 </Transition>
@@ -232,9 +242,9 @@ const EditOrder = () => {
                                                                     </td>
                                                                     <td className='px-6 py-6'>
                                                                         <button className="font-medium text-[#f26926] hover:underline" onClick={async (e) => {
-                                                                            // e.preventDefault()
                                                                             setOpenDelete(true)
-                                                                            // setIid(itm.item._id)
+                                                                            setDelId(itm._id)
+                                                                            // console.warn(itm._id)
                                                                         }} >Remove</button>
                                                                     </td>
                                                                 </tr>
@@ -306,11 +316,7 @@ const EditOrder = () => {
                                                 type="button"
                                                 className="inline-flex w-full justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                                                 onClick={async (e) => {
-                                                    // e.preventDefault()
-                                                    // // User confirmation
-                                                    // const res = await FDeleteMenu(itm.item.iid) // from iid state.
-                                                    // FGetMenu().then((res) => setMenu(res))
-                                                    // setIid('')
+                                                    handleDeleteItem(deleteId)
                                                     setOpenDelete(false)
                                                 }}
                                             >
