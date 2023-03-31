@@ -2,15 +2,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
-    item_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Menu',
+    table: {
+        type: String,
         required: true
     },
-    quantity: {
-        type: Number,
+    orders: [{
+        item: { type: mongoose.Schema.Types.ObjectId, ref: 'Menu' },
+        quantity: Number
+    }],
+    date_time: {
+        type: Date,
         required: true
     }
 });
 
-module.exports = mongoose.model('Order', orderSchema);
+module.exports = mongoose.model('Order',orderSchema);
