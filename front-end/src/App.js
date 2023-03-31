@@ -11,6 +11,7 @@ import CashierDashb from './Components/CashierDashb'
 import Menu from './Components/Menu'
 import Orders from './Components/Orders'
 import EditOrder from './Components/EditOrder'
+import Orderdata from './Components/OrderData'
 function App() {
   return (
     <BrowserRouter>
@@ -25,6 +26,7 @@ function App() {
           <Route exact path='/manager/menu' element={<Menu/>}/>
           <Route exact path='/cashier/takeorders' element={<Orders/>}/>
           <Route exact path='/editorders/:tab_id' element={<EditOrder/>}/>
+          <Route exact path='/manager/orderdata' element={<Orderdata/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
