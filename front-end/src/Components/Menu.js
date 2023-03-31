@@ -25,13 +25,34 @@ const Menu = () => {
 
     const change = async () => {
         if (addEdit === "Add Item") {
+            if (iname.trim() === '' || icat.trim() === '') {
+                alert('Please enter Item Name and Category.');
+                setOpen(true)
+                return;
+            }
+            if (iprice <= 0 || isNaN(iprice)) {
+                alert('Please enter a valid Price.');
+                setOpen(true)
+                return;
+            }
             const resp = await FAddMenu({
                 item_name: iname,
                 item_category: icat,
                 item_price: iprice
             })
+
             FGetMenu().then((res) => setMenu(res))
         } else if (addEdit === "Edit Item") {
+            if (iname.trim() === '' || icat.trim() === '') {
+                alert('Please enter Item Name and Category.');
+                setOpen(true)
+                return;
+            }
+            if (iprice <= 0 || isNaN(iprice)) {
+                alert('Please enter a valid Price.');
+                setOpen(true)
+                return;
+            }
             const resp = await FEditMenu({
                 _id: iid,
                 item_name: iname,

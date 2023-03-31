@@ -10,6 +10,7 @@ app.use(cors())
 require('./Routes/UserRoutes')(app)
 require('./Routes/MenuRoutes')(app)
 require('./Routes/TableRoutes')(app)
-app.listen(PORT,()=>{
+require('./Routes/OrderRoutes')(app)
+app.listen(PORT,()=>{   
     console.log("Server is Listening")
 })

@@ -1,4 +1,3 @@
-const path = require('path');
 const Table = require('../Models/Table');
 function TableRoutes(app) {
     app.post('/add_table', async (req, res) => {
@@ -47,7 +46,7 @@ function TableRoutes(app) {
             const tab_id = req.params.id
             const table = await Table.findOneAndUpdate(
                 { tab_id },
-                { $set: { orders: updatedItems} }
+                { $set: { orders: updatedItems } }
             );
 
             res.status(200).send({ success: true, table })
