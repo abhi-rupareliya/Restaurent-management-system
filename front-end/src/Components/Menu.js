@@ -6,9 +6,27 @@ import FGetMenu from '../Function/F_GetMenu'
 import FAddMenu from '../Function/F_AddMenu';
 import { FDeleteMenu, FEditMenu } from '../Function/F_EditMenu'
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SideBar from './SidebarMGR';
+import jwt_decode from "jwt-decode"
+
 // import SideBar from "./SideBar";
+
 const Menu = () => {
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (localStorage.getItem('myToken')) {
+            const decoded = jwt_decode(localStorage.getItem('myToken'))
+            if (decoded.user.role === 'manager') {}
+            else {
+                navigate("/cashier/" + decoded.user.id)
+            }
+        } else {
+            navigate('/login')
+            console.warn('Login first')
+        }
+    },)
+
     const [open, setOpen] = useState(false);
     const [openDelete, setOpenDelete] = useState(false)
     const [addEdit, setAddEdit] = useState('')
