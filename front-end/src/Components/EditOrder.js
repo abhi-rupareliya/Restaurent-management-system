@@ -18,7 +18,7 @@ const EditOrder = () => {
     const [openDelete, setOpenDelete] = useState(false)
     const cancelButtonRef = useRef(null)
     const [items, setItems] = useState([]);
-    const [deleteId,setDelId] = useState('')
+    const [deleteId, setDelId] = useState('')
     const [selectedItem, setSelectedItem] = useState('Select an Item');
     const [options, setOptions] = useState([]);
     const [qty, setQty] = useState(1)
@@ -73,7 +73,7 @@ const EditOrder = () => {
 
     const handleDeleteItem = async (oid) => {
         try {
-            const res = await FDeleteOrder(id,oid)
+            const res = await FDeleteOrder(id, oid)
             fetchData()
         } catch (error) {
             console.warn(error);

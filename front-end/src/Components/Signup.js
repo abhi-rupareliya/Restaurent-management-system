@@ -38,7 +38,7 @@ const Signup = () => {
                                 <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">What's your work ?</label>
                                 <select onChange={(e) => { setRole(e.target.value) }} value={Role} name="Role" id="Role" className='inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100'>
                                     {Role === "" ? <option value="">Select Role</option> : null}
-                                    <option value="cashier">Cashier</option>
+                                    <option value="cashier">Waiter</option>
                                     <option value="manager">Manager</option>
                                 </select>
                             </div>
