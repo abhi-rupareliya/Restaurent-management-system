@@ -112,4 +112,26 @@ module.exports = (app) => {
 
         res.status(200).send(resp)
     })
+
+    app.get('/orders', async (req, res) => {
+        try {
+            const tab = await Orders.find({}).select({table:1,date_time:1})
+            res.status(200).send(tab)
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Server error');
+        }
+    })
+
+    app.get('/orders/:id', async (req, res) => {
+        try {
+            console.log(req.params.id);
+            const tab = await Orders.findOne({_id : req.params.id  }).select({_id:1})
+                .populate({ path: "orders.item", select: ["item_name", "item_price"] })
+            res.status(200).send(tab)
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Server error');
+        }
+    })
 }

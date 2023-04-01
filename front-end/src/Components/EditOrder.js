@@ -3,11 +3,12 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition, Menu } from "@headlessui/react";
 import Navbar from './Navbar';
 import SideBar from './SidebarCSR';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import FGetMenu from '../Function/F_GetMenu';
 import FGetOrders from '../Function/F_GetOrders';
 import FUpdateOrders, { FAddOrder, FDeleteOrder } from '../Function/F_UpdateOrders';
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -18,10 +19,11 @@ const EditOrder = () => {
     const [openDelete, setOpenDelete] = useState(false)
     const cancelButtonRef = useRef(null)
     const [items, setItems] = useState([]);
-    const [deleteId,setDelId] = useState('')
+    const [deleteId, setDelId] = useState('')
     const [selectedItem, setSelectedItem] = useState('Select an Item');
     const [options, setOptions] = useState([]);
     const [qty, setQty] = useState(1)
+    const navigate = useNavigate()
 
     const fetchData = async () => {
         try {
@@ -73,7 +75,7 @@ const EditOrder = () => {
 
     const handleDeleteItem = async (oid) => {
         try {
-            const res = await FDeleteOrder(id,oid)
+            const res = await FDeleteOrder(id, oid)
             fetchData()
         } catch (error) {
             console.warn(error);
@@ -82,8 +84,6 @@ const EditOrder = () => {
 
     return (
         <>
-
-
             <Navbar title="Take Orders" />
             <SideBar />
             <div className="bg-[url('/public/images/dashbackground.jpg')]">
@@ -254,8 +254,22 @@ const EditOrder = () => {
                                                 }
                                             </tbody>
                                         </table>
-                                    </div>
 
+                                    </div>
+                                    <button className="text-white bg-[#f26926] hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2 text-center" onClick={async (e) => {
+                                        e.preventDefault()
+                                        const res = await fetch("http://localhost:4000/SaveOrder/" + id, {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json",
+                                                "myToken": localStorage.getItem("myToken")
+                                            },
+                                            body: JSON.stringify(Menu)
+                                        });
+                                        const json = await res.json()
+                                        navigate('/cashier/takeorders')
+
+                                    }}>Save</button>
                                 </div>
                             </div>
                         </div>
@@ -339,7 +353,7 @@ const EditOrder = () => {
                         </div>
                     </Dialog>
                 </Transition.Root>
-            </div>
+            </div >
 
         </>
     );
