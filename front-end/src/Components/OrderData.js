@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./SidebarMGR";
 import { Link } from "react-router-dom";
+import { FGetAllOrders } from "../Function/F_GetOrders";
+
 
 function OrderData() {
 
   const [date, setDate] = React.useState("");
+  const [Data, setData] = useState([]);
+
+  const fetchData = async () => {
+    const resp = await FGetAllOrders()
+    setData(resp)
+  }
+  useEffect(() => {
+    fetchData()
+  }, []);
   return (
     <>
       <Navbar title="Order Data" />
@@ -53,30 +64,23 @@ function OrderData() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b l bg-[#10171e] l border-gray-700">
-                  <td className="px-6 py-4">1</td>
-                  <td className="px-6 py-4">6427c9b63138348e1931e76d</td>
-                  <td className="px-6 py-4">10</td>
-                  <td className="px-6 py-4">01-04-2023</td>
-                  <td className="px-6 py-4" >
-                    <Link to="/manager/orderdata/data1">
-                      <button className="font-medium text-[#f26926] hover:underline"> Detais </button>
-                    </Link>
-                  </td>
-                  {/* <td className="px-6 py-4">123</td> */}
-                </tr>
-                <tr className="border-b l bg-[#10171e] l border-gray-700">
-                  <td className="px-6 py-4">2</td>
-                  <td className="px-6 py-4">6403120762dc8b69b826389b</td>
-                  <td className="px-6 py-4">4</td>
-                  <td className="px-6 py-4">01-04-2023</td>
-                  <td className="px-6 py-4" >
-                    <Link to="/manager/orderdata/data1">
-                      <button className="font-medium text-[#f26926] hover:underline"> Detais </button>
-                    </Link>
-                  </td>
-                  {/* <td className="px-6 py-4">123</td> */}
-                </tr>
+                {
+                  Data.map((order, key) => {
+                    return (
+                      <tr className="border-b l bg-[#10171e] l border-gray-700">
+                        <td className="px-6 py-4">{key + 1}</td>
+                        <td className="px-6 py-4">{order._id}</td>
+                        <td className="px-6 py-4">{order.netQuantity}</td>
+                        <td className="px-6 py-4">{order.date_time.substring(0, 10)}</td>
+                        <td className="px-6 py-4" >
+                          <Link to={`/manager/orderdata/${order._id}`}>
+                            <button className="font-medium text-[#f26926] hover:underline">Details</button>
+                          </Link>
+                        </td>
+                      </tr>
+                    )
+                  })
+                }
               </tbody>
             </table>
           </div>
