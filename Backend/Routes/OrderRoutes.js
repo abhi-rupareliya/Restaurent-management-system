@@ -79,7 +79,7 @@ module.exports = (app) => {
                 }
             },
             { $sort: { date_time: 1 } },
-            {$limit: 1}
+            { $limit: 1 }
         ])
 
         res.status(200).send(resp)
@@ -131,11 +131,9 @@ module.exports = (app) => {
     });
 
 
-    app.get('/orders/:id', async (req, res) => {
+    app.get('/orders/:_id', async (req, res) => {
         try {
-            console.log(req.params.id);
-            const tab = await Orders.findOne({ _id: req.params.id }).select({ _id: 1 })
-                .populate({ path: "orders.item", select: ["item_name", "item_price"] })
+            const tab = await Orders.findOne({ _id: req.params._id }).populate({ path: "orders.item"})
             res.status(200).send(tab)
         } catch (error) {
             console.log(error);

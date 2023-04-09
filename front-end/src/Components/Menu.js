@@ -249,10 +249,6 @@ const Menu = () => {
                     </Dialog>
                 </Transition.Root>
 
-
-
-
-
                 <Transition.Root show={open} as={Fragment}>
                     <Dialog
                         as="div"
