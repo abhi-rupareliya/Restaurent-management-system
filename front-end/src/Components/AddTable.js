@@ -1,18 +1,12 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./SidebarMGR";
-import { useState, useRef ,Fragment } from "react";
-import { Transition ,Dialog} from "@headlessui/react";
+import { useState, useRef, Fragment } from "react";
+import { Transition, Dialog } from "@headlessui/react";
 function AddTable() {
-  const [open, setOpen] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false)
-  const [addEdit, setAddEdit] = useState('')
+  const [openAdd, setOpenAdd] = useState(false)
   const cancelButtonRef = useRef(null)
-  const [Menu, setMenu] = useState([])
   const [iname, setIname] = useState('')
-  const [icat, setICat] = useState('')
-  const [iprice, setPrice] = useState('')
-  const [iid, setIid] = useState('')
   return (
     <>
       <Navbar title="Add Table" />
@@ -30,7 +24,9 @@ function AddTable() {
                 </div>
               </div>
             </div>
-            <div className="mx-auto max-w-7xl">
+            <div className="mx-auto max-w-7xl" onClick={() => {
+              setOpenAdd(true)
+            }}>
               <div className="group relative">
                 <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-orange-600 to-pink-600 opacity-25 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
                 <div className="flex  rounded-xl w-80 h-48 items-top relative justify-center items-center space-x-6 bg-[rgb(255,233,201)] px-7 py-6 leading-none ring-1 ring-gray-900/5">
@@ -43,12 +39,12 @@ function AddTable() {
           </div>
         </div>
       </div>
-      <Transition.Root show={openDelete} as={Fragment}>
+      <Transition.Root show={openAdd} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
           initialFocus={cancelButtonRef}
-          onClose={setOpenDelete}
+          onClose={setOpenAdd}
         >
           <Transition.Child
             as={Fragment}
@@ -82,11 +78,13 @@ function AddTable() {
                         >
                           Add Table
                         </Dialog.Title>
-                        <div className="mt-2">
-                          <div className="grid justify-center p-3 md:gap-5">
-                            <div className="relative z-0 w-full mb-6 group">
-                              Are you sure, you want to delete this item?
-                            </div>
+                        <div className="md:gap-6  m-5">
+                          <div className="relative z-0 w-64 mb-6 group">
+                            <input type="text" name="floating_first_name" value={iname} onChange={(e) => {
+                              e.preventDefault()
+                              setIname(e.target.value)
+                            }} id="floating_first_name" onChan className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-non focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:l  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Table Name</label>
                           </div>
                         </div>
                       </div>
@@ -97,14 +95,18 @@ function AddTable() {
                       type="button"
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={async (e) => {
+
+
+                        setOpenAdd(false)
                       }}
                     >
-                      Yes
+                      Save
                     </button>
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={async (e) => {
+                        setOpenAdd(false)
                       }}
                     >
                       Cancel
