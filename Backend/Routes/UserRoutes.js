@@ -7,6 +7,30 @@ function UserRoutes(app) {
         res.send("GET REQ.")
     })
 
+    app.get('/AllUser', async (req, res) => {
+        try {
+            const users = await User.find({}, 'userName email role');
+            res.json(users);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    })
+
+    app.delete('/deleteUser/:id', async (req, res) => {
+        try {
+            const userID = req.params.id;
+            const user = await User.findById(userID);
+            if (!user) {
+                res.status(400).send({ success: false, error: "User not found" })
+            }
+            const UserDel = await User.findByIdAndDelete(userID);
+            res.status(200).send({ success: true, data: UserDel });
+        }
+        catch (err) {
+            res.status(501).json({ message: err.message });
+        }
+    })
+
     app.post('/signup', async (req, res) => {
         try {
             const userName = req.body.userName
