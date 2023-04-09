@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import SideBar from './SidebarCSR';
 import { useParams, useNavigate } from 'react-router-dom';
 import FGetMenu from '../Function/F_GetMenu';
-import FGetOrders from '../Function/F_GetOrders';
+import {FGetOrders} from '../Function/F_GetOrders';
 import FUpdateOrders, { FAddOrder, FDeleteOrder } from '../Function/F_UpdateOrders';
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
@@ -36,7 +36,6 @@ const EditOrder = () => {
         }
     };
     useEffect(() => {
-        console.warn(options);
         fetchData();
     }, []);
 

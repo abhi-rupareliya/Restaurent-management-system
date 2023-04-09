@@ -78,12 +78,8 @@ module.exports = (app) => {
                     totalQuantity: { $sum: '$orders.quantity' }
                 }
             },
-            {
-                $sort: { date_time: 1 }
-            },
-            {
-                $limit: 1
-            }
+            { $sort: { date_time: 1 } },
+            {$limit: 1}
         ])
 
         res.status(200).send(resp)
@@ -94,18 +90,14 @@ module.exports = (app) => {
         console.log(dt)
         const resp = await Orders.aggregate([
             { $unwind: '$orders' },
-            {
-                $match: { date_time: new Date(dt) }
-            },
+            { $match: { date_time: new Date(dt) } },
             {
                 $group: {
                     _id: "$orders.item",
                     totalQuantity: { $sum: '$orders.quantity' }
                 }
             },
-            {
-                $sort: { totalQuantity: -1 }
-            },
+            { $sort: { totalQuantity: -1 } },
             { $limit: 1 }
         ])
 
@@ -114,13 +106,30 @@ module.exports = (app) => {
 
     app.get('/orders', async (req, res) => {
         try {
-            const tab = await Orders.find({}).select({ table: 1, date_time: 1 })
-            res.status(200).send(tab)
+            const orders = await Orders.aggregate([
+                { $unwind: "$orders" },
+                {
+                    $group: {
+                        _id: "$_id",
+                        totalQuantity: { $sum: "$orders.quantity" },
+                        date_time: { $first: "$date_time" }
+                    }
+                },
+                {
+                    $project: {
+                        _id: "$_id",
+                        netQuantity: "$totalQuantity",
+                        date_time: 1
+                    }
+                }
+            ]);
+            res.status(200).send(orders);
         } catch (error) {
             console.log(error);
             res.status(500).send('Server error');
         }
-    })
+    });
+
 
     app.get('/orders/:id', async (req, res) => {
         try {
@@ -167,7 +176,7 @@ module.exports = (app) => {
                     tax: 0,
                     price: orderItem.item && orderItem.item.item_price ? orderItem.item.item_price : 0
                 })),
-                
+
                 "bottom-notice": "Thank you for visiting us.",
 
                 "settings": {

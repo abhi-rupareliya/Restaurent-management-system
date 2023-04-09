@@ -33,7 +33,7 @@ function App() {
           <Route exact path='/manager/orderdata' element={<Orderdata/>}/>
           <Route exact path='/manager/users' element={<Users/>}/>
           <Route exact path='/manager/addtable' element={<AddTable/>}/>
-          <Route exact path='/manager/orderdata/data1' element={<OrderDataView/>}/>
+          <Route exact path='/manager/orderdata/:_id' element={<OrderDataView/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
