@@ -14,6 +14,8 @@ import EditOrder from './Components/EditOrder'
 import Orderdata from './Components/OrderData'
 import Users from './Components/Users'
 import AddTable from './Components/AddTable'
+import OrderDataView from './Components/OrderDataView'
+
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +33,7 @@ function App() {
           <Route exact path='/manager/orderdata' element={<Orderdata/>}/>
           <Route exact path='/manager/users' element={<Users/>}/>
           <Route exact path='/manager/addtable' element={<AddTable/>}/>
+          <Route exact path='/manager/orderdata/data1' element={<OrderDataView/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
