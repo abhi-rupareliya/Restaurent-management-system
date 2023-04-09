@@ -34,8 +34,7 @@ const ManagerDashb = () => {
             <div className="bg-black/75 col-span-5 p-4 sm:ml-64 backdrop-blur-sm  min-h-screen">
                <div className="grid grid-cols-3">
                   <div className="flex mx-auto col-span-3">
-
-                     <div className="mx-16 ml-12 max-w-xs rounded overflow-hidden bg-white">
+                     <div className="mx-16 ml-12 max-w-xs rounded-2xl overflow-hidden bg-white">
                         <div className="bg-orange-400">
                            <img className="mx-auto " src={logo} alt="images" />
                         </div>
@@ -47,7 +46,7 @@ const ManagerDashb = () => {
                         </div>
                      </div>
 
-                     <div className="mx-16 max-w-xs rounded overflow-hidden bg-white ">
+                     <div className="mx-16 max-w-xs rounded-2xl overflow-hidden bg-white ">
                         <div className="bg-orange-400">
                            <img className="mx-auto " src={logo} alt="images" />
                         </div>
@@ -59,7 +58,7 @@ const ManagerDashb = () => {
                         </div>
                      </div>
 
-                     <div className="mx-16 max-w-xs rounded overflow-hidden bg-white ">
+                     <div className="mx-16 max-w-xs rounded-2xl overflow-hidden bg-white ">
                         <div className="bg-orange-400">
                            <img className="mx-auto " src={logo} alt="images" />
                         </div>

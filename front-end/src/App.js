@@ -12,6 +12,8 @@ import Menu from './Components/Menu'
 import Orders from './Components/Orders'
 import EditOrder from './Components/EditOrder'
 import Orderdata from './Components/OrderData'
+import OrderDataView from './Components/OrderDataView'
+
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +29,7 @@ function App() {
           <Route exact path='/cashier/takeorders' element={<Orders/>}/>
           <Route exact path='/editorders/:tab_id' element={<EditOrder/>}/>
           <Route exact path='/manager/orderdata' element={<Orderdata/>}/>
+          <Route exact path='/manager/orderdata/data1' element={<OrderDataView/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
