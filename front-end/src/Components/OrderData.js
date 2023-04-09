@@ -4,6 +4,8 @@ import Sidebar from "./SidebarMGR";
 import { Link } from "react-router-dom";
 
 function OrderData() {
+
+  const [date, setDate] = React.useState("");
   return (
     <>
       <Navbar title="Order Data" />
@@ -11,6 +13,25 @@ function OrderData() {
       <div className="bg-[url('/public/images/dashbackground.jpg')]">
         <div className="bg-black/75 col-span-5 p-4 sm:ml-64 backdrop-blur-sm  min-h-screen">
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div className="m-3 flex justify-between">
+              
+
+              <div className='border px-3 py-2 rounded-lg md:flex-row md:space-x-8 md:mt-0  md:font-medium md:border-0 text-[#f06826] text-2xl'>
+                Select Date:
+                <input type="date" className='bg-transparent mx-3' onChange={(e) => {
+                  setDate(e.target.value);
+                  console.warn(e.target.value);
+                }} />
+              </div>
+              <div className="md:w-auto place-self-center" >
+                <ul className=" border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
+                  <li>
+                    <button className="text-white bg-[#f26926] hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2 text-center">
+                      See Orders</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <table className="w-full text-sm text-left text-gray-400">
               <thead className="text-xs text-[#f26926] uppercase bg-[#2d2d2d] l">
                 <tr>
