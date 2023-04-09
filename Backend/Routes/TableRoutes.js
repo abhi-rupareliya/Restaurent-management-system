@@ -1,8 +1,8 @@
 const Table = require('../Models/Table');
 function TableRoutes(app) {
-    app.post('/add_table', async (req, res) => {
+    app.post('/add_table/:tab_id', async (req, res) => {
         try {
-            const { tab_id } = req.body;
+            const { tab_id } = req.params;
 
             const existingTable = await Table.findOne({ tab_id });
             if (existingTable) {

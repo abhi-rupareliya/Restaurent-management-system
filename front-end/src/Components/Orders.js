@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import { useEffect } from "react";
 import SideBar from "./SidebarCSR";
 import { useNavigate } from "react-router-dom";
-import FGetTables from "../Function/F_GetTables";
+import {FGetTables} from "../Function/F_GetTables";
 // import SideBar from "./SideBar";
 const Orders = () => {
   const [open, setOpen] = useState(false);

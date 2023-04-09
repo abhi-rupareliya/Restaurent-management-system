@@ -1,29 +1,43 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./SidebarMGR";
-import { useState, useRef, Fragment } from "react";
+import { useState, useRef, Fragment, useEffect } from "react";
 import { Transition, Dialog } from "@headlessui/react";
+import { FAddTable, FGetTables } from "../Function/F_GetTables";
 function AddTable() {
   const [openAdd, setOpenAdd] = useState(false)
   const cancelButtonRef = useRef(null)
-  const [iname, setIname] = useState('')
+  const [table, setTable] = useState('')
+  const [AllTables, setAll] = useState([])
+
+  useEffect(() => {
+    FGetTables().then((res) => setAll(res));
+  }, []);
+
   return (
     <>
       <Navbar title="Add Table" />
       <Sidebar />
+
       <div className="bg-[url('/public/images/dashbackground.jpg')]">
         <div className="bg-black/75 col-span-5 p-4 sm:ml-64 backdrop-blur-sm  min-h-screen">
           <div className="grid grid-cols-3 gap-8 justify-items-center gap-y-20">
-            <div className="mx-auto max-w-7xl">
-              <div className="group relative">
-                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-orange-600 to-pink-600 opacity-25 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
-                <div className="flex  rounded-xl w-80 h-48 items-top relative justify-center items-center space-x-6 bg-[rgb(255,233,201)] px-7 py-6 leading-none ring-1 ring-gray-900/5">
-                  <h1 className="text-4xl font-bold text-[#393b3a] z-10 space-y-2">
-                    F1T1
-                  </h1>
-                </div>
-              </div>
-            </div>
+            {
+              AllTables.map((tab) => {
+                return (
+                  <div className="mx-auto max-w-7xl">
+                    <div className="group relative">
+                      <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-orange-600 to-pink-600 opacity-25 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
+                      <div className="flex  rounded-xl w-80 h-48 items-top relative justify-center items-center space-x-6 bg-[rgb(255,233,201)] px-7 py-6 leading-none ring-1 ring-gray-900/5">
+                        <h1 className="text-4xl font-bold text-[#393b3a] z-10 space-y-2">
+                          {tab.tab_id}
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })
+            }
             <div className="mx-auto max-w-7xl" onClick={() => {
               setOpenAdd(true)
             }}>
@@ -80,9 +94,9 @@ function AddTable() {
                         </Dialog.Title>
                         <div className="md:gap-6  m-5">
                           <div className="relative z-0 w-64 mb-6 group">
-                            <input type="text" name="floating_first_name" value={iname} onChange={(e) => {
+                            <input type="text" name="floating_first_name" value={table} onChange={(e) => {
                               e.preventDefault()
-                              setIname(e.target.value)
+                              setTable(e.target.value)
                             }} id="floating_first_name" onChan className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-non focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:l  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Table Name</label>
                           </div>
@@ -95,8 +109,13 @@ function AddTable() {
                       type="button"
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={async (e) => {
-
-
+                        if (!table) {
+                          alert("Please enter table name")
+                          return
+                        }
+                        await FAddTable(table)
+                        setTable("")
+                        FGetTables().then((res) => setAll(res))
                         setOpenAdd(false)
                       }}
                     >
