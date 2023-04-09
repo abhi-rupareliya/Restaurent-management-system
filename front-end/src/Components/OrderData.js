@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./SidebarMGR";
-
+  
 function OrderData() {
   return (
     <>
