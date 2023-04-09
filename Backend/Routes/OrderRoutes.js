@@ -1,6 +1,7 @@
 const Orders = require('../Models/Orders')
 const Table = require('../Models/Table')
 const mongoose = require('mongoose')
+const easyinvoice = require('easyinvoice')
 module.exports = (app) => {
     app.post('/SaveOrder/:tabid', async (req, res) => {
         const table = req.params.tabid;
@@ -88,8 +89,6 @@ module.exports = (app) => {
         res.status(200).send(resp)
     })
 
-
-    //today most popular
     app.get('/st2', async (req, res) => {
         const dt = new Date().toISOString().substring(0, 10)
         console.log(dt)
@@ -115,7 +114,7 @@ module.exports = (app) => {
 
     app.get('/orders', async (req, res) => {
         try {
-            const tab = await Orders.find({}).select({table:1,date_time:1})
+            const tab = await Orders.find({}).select({ table: 1, date_time: 1 })
             res.status(200).send(tab)
         } catch (error) {
             console.log(error);
@@ -126,7 +125,7 @@ module.exports = (app) => {
     app.get('/orders/:id', async (req, res) => {
         try {
             console.log(req.params.id);
-            const tab = await Orders.findOne({_id : req.params.id  }).select({_id:1})
+            const tab = await Orders.findOne({ _id: req.params.id }).select({ _id: 1 })
                 .populate({ path: "orders.item", select: ["item_name", "item_price"] })
             res.status(200).send(tab)
         } catch (error) {
@@ -134,4 +133,60 @@ module.exports = (app) => {
             res.status(500).send('Server error');
         }
     })
+
+    app.get('/bill/:_id', async (req, res) => {
+        try {
+            const orderId = req.params._id;
+            const order = await Orders.findById(orderId).populate({ path: 'orders.item', select: ["item_name", "item_price"] });
+
+            if (!order) {
+                return res.status(404).json({ error: 'Order not found' });
+            }
+
+            const data = {
+                "images": {
+                    "logo": "https://public.easyinvoice.cloud/img/logo_en_original.png",
+                },
+
+                "sender": {
+                    "company": "Resaturent ABC",
+                    "address": "New 150ft Road",
+                    "zip": "360004",
+                    "city": "Rajkot",
+                    "country": "India"
+                },
+
+                "information": {
+                    "number": order._id,
+                    "date": order.date_time.toISOString().substring(0, 10),
+                },
+
+                products: order.orders.map((orderItem) => ({
+                    quantity: orderItem.quantity,
+                    description: orderItem.item && orderItem.item.item_name ? orderItem.item.item_name : '',
+                    tax: 0,
+                    price: orderItem.item && orderItem.item.item_price ? orderItem.item.item_price : 0
+                })),
+                
+                "bottom-notice": "Thank you for visiting us.",
+
+                "settings": {
+                    "currency": "INR",
+                    "height": "800px",
+                    "width": "400px",
+                },
+            };
+
+            const result = await easyinvoice.createInvoice(data);
+            const pdf = new Buffer.from(result.pdf, 'base64');
+
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=invoice_${orderId}.pdf`);
+            res.send(pdf);
+
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
 }
