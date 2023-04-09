@@ -1,60 +1,102 @@
 import React from 'react'
 import Navbar from "./Navbar";
 import Sidebar from "./SidebarMGR";
-import { useState, useRef, Fragment } from "react";
+import { useState, useRef, Fragment, useEffect } from "react";
 import { Transition, Dialog } from "@headlessui/react";
+import { FDeleteUser, FGetUsers } from '../Function/F_User';
+import jwt_decode from "jwt-decode"
+import { useNavigate } from 'react-router-dom';
 
 function Users() {
-    const [openAskDelete, setOpenAskDelete] = React.useState(false)
-    const cancelButtonRef = useRef(null)
 
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (localStorage.getItem('myToken')) {
+      const decoded = jwt_decode(localStorage.getItem('myToken'))
+      if (decoded.user.role === 'manager') { }
+      else {
+        navigate("/cashier/" + decoded.user.id)
+      }
+    } else {
+      navigate('/login')
+      console.warn('Login first')
+    }
+  },)
+
+  const [openAskDelete, setOpenAskDelete] = React.useState(false)
+  const [users, setUsers] = useState([])
+  const [selected, setSelected] = useState('')
+  const cancelButtonRef = useRef(null)
+  const fetchData = async () => {
+    const resp = await FGetUsers()
+    setUsers(resp)
+  }
+  useEffect(() => {
+    fetchData()
+  }, []);
+  console.warn(users);
   return (
     <>
-        <Navbar title="Users" />
-        <Sidebar />
-        <div className="bg-[url('/public/images/dashbackground.jpg')]">
-            <div className="bg-black/75 col-span-5 p-4 sm:ml-64 backdrop-blur-sm  min-h-screen">
-                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table className="w-full text-sm text-left text-gray-400" >
-                        <thead className="text-xs text-[#f26926] uppercase bg-[#2d2d2d] l">
-                            <tr>
-                                <th scope="col" className="px-6 py-3">
-                                    Sr.
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    User name
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    User ID
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Action
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr className="border-b l bg-[#10171e] l border-gray-700">
-                                <td className="px-6 py-4">
-                                    1.
-                                </td>
-                                <td className="px-6 py-4">
-                                    Divy Sheta
-                                </td>
-                                <td className="px-6 py-4">
-                                    Divy@123
-                                </td>
-                                <td className="px-6 py-4" onClick={() => {
-                                    setOpenAskDelete(true)
-                                }}>
-                                    <button className="font-medium text-[#f26926] l hover:underline">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+      <Navbar title="Users" />
+      <Sidebar />
+      <div className="bg-[url('/public/images/dashbackground.jpg')]">
+        <div className="bg-black/75 col-span-5 p-4 sm:ml-64 backdrop-blur-sm  min-h-screen">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="w-full text-sm text-left text-gray-400" >
+              <thead className="text-xs text-[#f26926] uppercase bg-[#2d2d2d] l">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Sr.
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    userName
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Email
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Role
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  users.map((user, key) => {
+                    return (
+                      <tr className="border-b l bg-[#10171e] l border-gray-700">
+                        <td className="px-6 py-4">
+                          {key + 1}
+                        </td>
+                        <td className="px-6 py-4">
+                          {user.userName}
+                        </td>
+                        <td className="px-6 py-4">
+                          {user.email}
+                        </td>
+                        <td className="px-6 py-4">
+                          {user.role}
+                        </td>
+                        <td className="px-6 py-4" onClick={() => {
+                          setOpenAskDelete(true)
+                        }}>
+                          <button className="font-medium text-[#f26926] l hover:underline"
+                            onClick={() => {
+                              setSelected(user._id)
+                            }}>Delete</button>
+                        </td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
-        <Transition.Root show={openAskDelete} as={Fragment}>
+      </div>
+      <Transition.Root show={openAskDelete} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
@@ -96,7 +138,7 @@ function Users() {
                         <div className="md:gap-6  m-5">
                           <div className="relative z-0 w-auto mb-6 group">
                             Are you sure you want to remove this user ?
-                            
+
                           </div>
                         </div>
                       </div>
@@ -107,8 +149,9 @@ function Users() {
                       type="button"
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={async (e) => {
-
-
+                        await FDeleteUser(selected)
+                        setSelected('')
+                        fetchData()
                         setOpenAskDelete(false)
                       }}
                     >

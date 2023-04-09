@@ -2,6 +2,7 @@ const Orders = require('../Models/Orders')
 const Table = require('../Models/Table')
 const mongoose = require('mongoose')
 const easyinvoice = require('easyinvoice')
+const path = require('path')
 module.exports = (app) => {
     app.post('/SaveOrder/:tabid', async (req, res) => {
         const table = req.params.tabid;
@@ -42,7 +43,7 @@ module.exports = (app) => {
 
     //most selling 
     app.get('/st', async (req, res) => {
-        let dt = new Date().toISOString().substring(0, 10)
+        let dt = new Date().toISOString().substring(0, 10);
         console.log(dt);
         const resp = await Orders.aggregate([
             { $unwind: '$orders' },
@@ -58,15 +59,23 @@ module.exports = (app) => {
             {
                 $limit: 1
             }
-        ])
+        ]);
 
-        res.status(200).send(resp)
+        // Fetch the most selling item name from the aggregation result
+        const mostSellingItem = await Orders.populate(resp, { path: '_id', select: 'item_name' });
+
+        // Add the item_name property to the aggregation result
+        const respWithItemName = resp.map(result => {
+            return { ...result, item_name: mostSellingItem[0]._id.item_name };
+        });
+
+        res.status(200).send(respWithItemName);
+
     })
 
-
+    // todays selling 
     app.get('/st1', async (req, res) => {
         const dt = new Date().toISOString().substring(0, 10)
-        console.log(dt)
         const resp = await Orders.aggregate([
             { $unwind: '$orders' },
             {
@@ -85,23 +94,20 @@ module.exports = (app) => {
         res.status(200).send(resp)
     })
 
-    app.get('/st2', async (req, res) => {
-        const dt = new Date().toISOString().substring(0, 10)
-        console.log(dt)
-        const resp = await Orders.aggregate([
-            { $unwind: '$orders' },
-            { $match: { date_time: new Date(dt) } },
-            {
-                $group: {
-                    _id: "$orders.item",
-                    totalQuantity: { $sum: '$orders.quantity' }
-                }
-            },
-            { $sort: { totalQuantity: -1 } },
-            { $limit: 1 }
-        ])
 
-        res.status(200).send(resp)
+    app.get('/st2', async (req, res) => {
+        try {
+            const orders = await Orders.find();
+            let totalQuantity = 0;
+            orders.forEach(order => {
+                order.orders.forEach(orderItem => {
+                    totalQuantity += orderItem.quantity;
+                });
+            });
+            res.status(200).json({ totalQuantity });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
     })
 
     app.get('/orders', async (req, res) => {
@@ -133,7 +139,7 @@ module.exports = (app) => {
 
     app.get('/orders/:_id', async (req, res) => {
         try {
-            const tab = await Orders.findOne({ _id: req.params._id }).populate({ path: "orders.item"})
+            const tab = await Orders.findOne({ _id: req.params._id }).populate({ path: "orders.item" })
             res.status(200).send(tab)
         } catch (error) {
             console.log(error);
@@ -168,11 +174,14 @@ module.exports = (app) => {
                     "date": order.date_time.toISOString().substring(0, 10),
                 },
 
-                products: order.orders.map((orderItem) => ({
-                    quantity: orderItem.quantity,
-                    description: orderItem.item && orderItem.item.item_name ? orderItem.item.item_name : '',
-                    tax: 0,
-                    price: orderItem.item && orderItem.item.item_price ? orderItem.item.item_price : 0
+                "products": order.orders.map((orderItem) => ({
+                    "quantity": orderItem.quantity,
+                    "description": orderItem.item && orderItem.item.item_name ? orderItem.item.item_name : '',
+                    "tax": {
+                        "taxNotation": "gst", // Set the tax notation (e.g. 'vat', 'gst', etc.)
+                        "taxAmount": 10 // Set the tax amount in percentage
+                    },
+                    "price": orderItem.item && orderItem.item.item_price ? orderItem.item.item_price : 0
                 })),
 
                 "bottom-notice": "Thank you for visiting us.",
@@ -181,7 +190,7 @@ module.exports = (app) => {
                     "currency": "INR",
                     "height": "800px",
                     "width": "400px",
-                },
+                }
             };
 
             const result = await easyinvoice.createInvoice(data);

@@ -1,10 +1,27 @@
-import React from "react";
-import Navbar from "./Navbar";
-import Sidebar from "./SidebarMGR";
-import { useState, useRef, Fragment, useEffect } from "react";
-import { Transition, Dialog } from "@headlessui/react";
-import { FAddTable, FGetTables } from "../Function/F_GetTables";
+import React from "react"
+import Navbar from "./Navbar"
+import Sidebar from "./SidebarMGR"
+import { useState, useRef, Fragment, useEffect } from "react"
+import { Transition, Dialog } from "@headlessui/react"
+import { FAddTable, FGetTables } from "../Function/F_GetTables"
+import jwt_decode from "jwt-decode"
+import { useNavigate } from "react-router-dom"
 function AddTable() {
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (localStorage.getItem('myToken')) {
+      const decoded = jwt_decode(localStorage.getItem('myToken'))
+      if (decoded.user.role === 'manager') { }
+      else {
+        navigate("/cashier/" + decoded.user.id)
+      }
+    } else {
+      navigate('/login')
+      console.warn('Login first')
+    }
+  },)
+
   const [openAdd, setOpenAdd] = useState(false)
   const cancelButtonRef = useRef(null)
   const [table, setTable] = useState('')

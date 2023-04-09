@@ -1,9 +1,23 @@
 import Sidebar from "./SidebarMGR";
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
-import { useParams } from "react-router-dom";
-
+import { useParams ,useNavigate} from "react-router-dom";
+import jwt_decode from "jwt-decode"
 function OrderDataView() {
+
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (localStorage.getItem('myToken')) {
+            const decoded = jwt_decode(localStorage.getItem('myToken'))
+            if (decoded.user.role === 'manager') { }
+            else {
+                navigate("/cashier/" + decoded.user.id)
+            }
+        } else {
+            navigate('/login')
+            console.warn('Login first')
+        }
+    },)
 
     const { _id } = useParams();
     const [order, setOrder] = useState(null);

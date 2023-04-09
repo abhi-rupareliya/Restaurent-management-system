@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./SidebarMGR";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import { FGetAllOrders } from "../Function/F_GetOrders";
-
+import jwt_decode from "jwt-decode"
 
 function OrderData() {
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (localStorage.getItem('myToken')) {
+      const decoded = jwt_decode(localStorage.getItem('myToken'))
+      if (decoded.user.role === 'manager') { }
+      else {
+        navigate("/cashier/" + decoded.user.id)
+      }
+    } else {
+      navigate('/login')
+      console.warn('Login first')
+    }
+  },)
 
   const [Data, setData] = useState([]);
   const [filtered, setFiltered] = useState([])

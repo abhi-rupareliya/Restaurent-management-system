@@ -9,7 +9,7 @@ function UserRoutes(app) {
 
     app.get('/AllUser', async (req, res) => {
         try {
-            const users = await User.find({}, 'userName email role');
+            const users = await User.find({});
             res.json(users);
         } catch (err) {
             res.status(500).json({ message: err.message });
